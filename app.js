@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express=require("express");
 const bodyParser=require("body-parser");
 const https=require("https");
@@ -8,7 +9,7 @@ const axios=require("axios");
 
 
 const app=express();
-mongoose.connect("mongodb+srv://tarun20092002:LYyzDyNtNgn90zu1@cluster0ww.pfmjqze.mongodb.net/weathersDB",{UseNewUrlParser:true, useUnifiedTopology : true});
+mongoose.connect(process.env.MONGO_URL);
 const weatherschema=new mongoose.Schema(
     {
         name:String,
@@ -50,7 +51,7 @@ const transporter = nodemailer.createTransport({
 
 
 
-cron.schedule("48 10 * * *", async () => {
+cron.schedule("30 9 * * *", async () => {
     try {
       const weatherData = await weather.find().exec();
         console.log(weatherData);
@@ -118,30 +119,30 @@ cron.schedule("48 10 * * *", async () => {
           to: email,
           subject: "Weather Wise Forecast",
           text: 'The weather forecast for today in '+location+' is ' +
-          ' The Temperatur at 0:00 is '+temp0 +' The condition is '+feels0 +'\n'+
-          ' The Temperatur at 1:00 is '+temp1 +' The condition is '+feels1 +'\n'+
-          ' The Temperatur at 2:00 is '+temp2 +' The condition is '+feels2 +'\n'+
-          ' The Temperatur at 3:00 is '+temp3 +' The condition is '+feels3 +'\n'+
-          ' The Temperatur at 4:00 is '+temp4 +' The condition is '+feels4 +'\n'+
-          ' The Temperatur at 5:00 is '+temp5 +' The condition is '+feels5 +'\n'+
-          ' The Temperatur at 6:00 is '+temp6 +' The condition is '+feels6 +'\n'+
-          ' The Temperatur at 7:00 is '+temp7 +' The condition is '+feels7 +'\n'+
-          ' The Temperatur at 8:00 is '+temp8 +' The condition is '+feels8 +'\n'+
-          ' The Temperatur at 9:00 is '+temp9 +' The condition is '+feels9 +'\n'+
-          ' The Temperatur at 10:00 is '+temp10 +' The condition is '+feels10 +'\n'+
-          ' The Temperatur at 11:00 is '+temp11 +' The condition is '+feels11 +'\n'+
-          ' The Temperatur at 12:00 is '+temp12 +' The condition is '+feels12 +'\n'+
-          ' The Temperatur at 13:00 is '+temp13 +' The condition is '+feels13 +'\n'+
-          ' The Temperatur at 14:00 is '+temp14 +' The condition is '+feels14 +'\n'+
-          ' The Temperatur at 15:00 is '+temp15 +' The condition is '+feels15 +'\n'+
-          ' The Temperatur at 16:00 is '+temp16 +' The condition is '+feels16 +'\n'+
-          ' The Temperatur at 17:00 is '+temp17 +' The condition is '+feels17 +'\n'+
-          ' The Temperatur at 18:00 is '+temp18 +' The condition is '+feels18 +'\n'+
-          ' The Temperatur at 19:00 is '+temp19 +' The condition is '+feels19 +'\n'+
-          ' The Temperatur at 20:00 is '+temp20 +' The condition is '+feels20 +'\n'+
-          ' The Temperatur at 21:00 is '+temp21 +' The condition is '+feels21 +'\n'+
-          ' The Temperatur at 22:00 is '+temp22 +' The condition is '+feels22 +'\n'+
-          ' The Temperatur at 23:00 is '+temp23 +' The condition is '+feels23 +'\n'
+          ' The Temperature at 0:00 is '+temp0 +' The condition is '+feels0 +'\n'+
+          ' The Temperature at 1:00 is '+temp1 +' The condition is '+feels1 +'\n'+
+          ' The Temperature at 2:00 is '+temp2 +' The condition is '+feels2 +'\n'+
+          ' The Temperature at 3:00 is '+temp3 +' The condition is '+feels3 +'\n'+
+          ' The Temperature at 4:00 is '+temp4 +' The condition is '+feels4 +'\n'+
+          ' The Temperature at 5:00 is '+temp5 +' The condition is '+feels5 +'\n'+
+          ' The Temperature at 6:00 is '+temp6 +' The condition is '+feels6 +'\n'+
+          ' The Temperature at 7:00 is '+temp7 +' The condition is '+feels7 +'\n'+
+          ' The Temperature at 8:00 is '+temp8 +' The condition is '+feels8 +'\n'+
+          ' The Temperature at 9:00 is '+temp9 +' The condition is '+feels9 +'\n'+
+          ' The Temperature at 10:00 is '+temp10 +' The condition is '+feels10 +'\n'+
+          ' The Temperature at 11:00 is '+temp11 +' The condition is '+feels11 +'\n'+
+          ' The Temperature at 12:00 is '+temp12 +' The condition is '+feels12 +'\n'+
+          ' The Temperature at 13:00 is '+temp13 +' The condition is '+feels13 +'\n'+
+          ' The Temperature at 14:00 is '+temp14 +' The condition is '+feels14 +'\n'+
+          ' The Temperature at 15:00 is '+temp15 +' The condition is '+feels15 +'\n'+
+          ' The Temperature at 16:00 is '+temp16 +' The condition is '+feels16 +'\n'+
+          ' The Temperature at 17:00 is '+temp17 +' The condition is '+feels17 +'\n'+
+          ' The Temperature at 18:00 is '+temp18 +' The condition is '+feels18 +'\n'+
+          ' The Temperature at 19:00 is '+temp19 +' The condition is '+feels19 +'\n'+
+          ' The Temperature at 20:00 is '+temp20 +' The condition is '+feels20 +'\n'+
+          ' The Temperature at 21:00 is '+temp21 +' The condition is '+feels21 +'\n'+
+          ' The Temperature at 22:00 is '+temp22 +' The condition is '+feels22 +'\n'+
+          ' The Temperature at 23:00 is '+temp23 +' The condition is '+feels23 +'\n'
 
             
         };
@@ -208,20 +209,17 @@ app.post("/", async (req, res) => {
     } catch (error) {
       console.log("Error fetching weather data:", error);
     }
-  });
+});
 
 
-
-if(process.env.NODE_ENV ==='production'){
-
-}
+const PORT=process.env.PORT || 3000;
 
 
 
 
 
 
-app.listen(3000);
+app.listen(PORT);
 
 
 // API KEY :8ee881e28153477693c122027232706
