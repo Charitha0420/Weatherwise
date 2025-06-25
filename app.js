@@ -51,7 +51,7 @@ const transporter = nodemailer.createTransport({
 
 
 
-cron.schedule("30 9 * * *", async () => {
+cron.schedule("53 18 * * *", async () => {
     try {
       const weatherData = await weather.find().exec();
         console.log(weatherData);
